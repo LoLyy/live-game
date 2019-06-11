@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', function () {
+Route::any('/', function () {
+    dd(request()->header());
     return view('welcome');
 });
 
@@ -22,6 +23,10 @@ Route::get('/index', function () {
 Route::get('/detail', function () {
     return view('detail');
 });
-Route::get('/login', function () {
-    return view('login');
+Route::any('/login', function () {
+
+    if (request()->hasFile('c')) {
+        $path = request()->file('c')->store('images');
+    }
+    return response()->json([request()->all(), $path ?? 'null']);
 });
