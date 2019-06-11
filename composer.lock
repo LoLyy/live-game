@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94d4bf9ac7f4a933030e46a346ee2917",
+    "content-hash": "a7c6b919761fec96130f08f74a554b8b",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3289,6 +3289,52 @@
             "time": "2019-03-17T17:37:11+00:00"
         },
         {
+            "name": "eaglewu/swoole-ide-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wudi/swoole-ide-helper.git",
+                "reference": "ac02b69535e28e3398df151b7e8e9a61370f752e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wudi/swoole-ide-helper/zipball/ac02b69535e28e3398df151b7e8e9a61370f752e",
+                "reference": "ac02b69535e28e3398df151b7e8e9a61370f752e",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "eagle",
+                    "email": "eaglewudi@gmail.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "Swoole IDE Helper, to improve auto-completion",
+            "keywords": [
+                "autocomplete",
+                "codeintel",
+                "helper",
+                "ide",
+                "netbeans",
+                "phpdoc",
+                "phpstorm",
+                "sublime",
+                "swoole"
+            ],
+            "time": "2019-05-24T09:02:25+00:00"
+        },
+        {
             "name": "filp/whoops",
             "version": "2.3.1",
             "source": {
@@ -5123,7 +5169,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "eaglewu/swoole-ide-helper": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
