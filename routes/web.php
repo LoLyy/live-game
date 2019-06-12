@@ -12,7 +12,7 @@
 */
 
 Route::any('/', function () {
-    dd(request()->header());
+
     return view('welcome');
 });
 
