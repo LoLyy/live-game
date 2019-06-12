@@ -9,6 +9,6 @@ class SMSController extends Controller
 {
     public function sms(Request $request)
     {
-       $this->success();
+        return $this->success();
     }
 }
