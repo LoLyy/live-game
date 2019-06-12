@@ -25,7 +25,7 @@ class Controller extends BaseController
     {
         $response = [
             'code'    => $code,
-            'data'    => $data ?? (object)[],
+            'data'    => $data ?: (object)[],
             'message' => $message,
         ];
         return response()->json($response, Response::HTTP_OK, $headers);
