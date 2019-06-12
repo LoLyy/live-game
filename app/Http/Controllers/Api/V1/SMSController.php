@@ -26,6 +26,6 @@ class SMSController extends Controller
             Cache::put($mobile . '_verify_code', $code, 5);
         }
 
-        return $this->success([compact('code')]);
+        return $this->success();
     }
 }
