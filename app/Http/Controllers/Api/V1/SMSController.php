@@ -20,7 +20,7 @@ class SMSController extends Controller
         $code = random_int(10000, 99999);
 
         if (php_sapi_name() == 'cli') {
-            $res = Task::transfer(new SendVerifyCodeTask(compact('mobile', 'code')));
+            $res = asyncTask(new SendVerifyCodeTask(compact('mobile', 'code')));
         } else {
             // send voice verify code
             $res = SMSService::create()->mock()->voice($code)->send($mobile);
