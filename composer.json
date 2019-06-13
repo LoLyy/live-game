@@ -44,7 +44,8 @@
     ],
     "files": [
       "app/Constants/ResponseCode.php",
-      "app/Constants/Service.php"
+      "app/Constants/Service.php",
+      "app/Helpers/functions.php"
     ]
   },
   "autoload-dev": {

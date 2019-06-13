@@ -18,12 +18,12 @@ class SMSController extends Controller
 
         // send sms verify code
 //        $content = str_replace('#code#',$code,SMS_VERIFY_CODE_TEMPLATE);
-//        $res = SMSService::create()->sms($content)->send($mobile);
+//        $res = SMSService::create()->mock()->sms($content)->send($mobile);
 
         // send voice verify code
-        $res = SMSService::create()->voice($code)->send($mobile);
+        $res = SMSService::create()->mock()->voice($code)->send($mobile);
         if ($res) {
-            Cache::put($mobile . '_verify_code', $code, 5);
+            Cache::put(verifyCodeKey($mobile), $code, 5 * 60);
         }
 
         return $this->success();

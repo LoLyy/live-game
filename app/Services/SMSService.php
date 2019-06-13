@@ -9,6 +9,7 @@ class SMSService
 {
     private $node_url;
     private $params = [];
+    private $is_mock = false;
 
     /**
      * SMSService constructor.
@@ -27,6 +28,14 @@ class SMSService
         return new self();
     }
 
+    /**
+     * mock
+     */
+    public function mock()
+    {
+        $this->is_mock = true;
+        return $this;
+    }
 
     /**
      * 短信类型
@@ -63,7 +72,7 @@ class SMSService
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function send(string $mobile)
+    public function send(string $mobile = '')
     {
         $this->params['mobile'] = (string)$mobile;
 
@@ -71,13 +80,17 @@ class SMSService
             throw new \Exception("没有设置短信内容,短信发送失败");
         }
 
-//        $res = HttpClientService::getInstance()->post($this->node_url, $this->params, 'json');
+        if ($this->is_mock) { // mock send success
+            $res['result'] = 0;
 
-        // todo mock successful
-        $res['result'] = 0;
+        } else {// 调用第三方发送短信
+            $res = HttpClientService::getInstance()->post($this->node_url, $this->params, 'json');
+
+        }
 
         $log = "短信：{$mobile}  " . json_encode($this->params) . '  ' . json_encode($res);
 
+        // 记录发送日志
         if (php_sapi_name() == 'cli') { // swoole 模式走协程
             go(function () use ($log) {
                 Log::info('协程：' . $log);
@@ -87,7 +100,6 @@ class SMSService
         }
 
         if (isset($res['result']) && $res['result'] == 0) {
-
 
             return true;
         }
