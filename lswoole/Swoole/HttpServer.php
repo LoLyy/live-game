@@ -62,14 +62,17 @@ class HttpServer
     /**
      * @param SwooleHttpServer $server
      * @param $worker_id
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function onWorkerStart(SwooleHttpServer $server, $worker_id)
     {
         // 加载Laravel启动必须的文件
-//        require __DIR__ . '/../vendor/autoload.php';
+        require __DIR__ . '/../../vendor/autoload.php';
         // get a Application
         require_once __DIR__ . '/../../bootstrap/app.php';
 
+        // console kernel bootstrap
+        app()->make(\App\Console\Kernel::class)->bootstrap();
         // bind swoole to laravel
         app()->singleton('swoole', function () {
             return $this->server;

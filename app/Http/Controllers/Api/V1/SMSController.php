@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\SMSSendRequest;
 use App\Services\SMSService;
+use App\Tasks\SendVerifyCodeTask;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use LSwoole\Swoole\Task\Task;
 
 class SMSController extends Controller
 {
@@ -17,12 +19,12 @@ class SMSController extends Controller
         }
         $code = random_int(10000, 99999);
 
-        // send sms verify code
-//        $content = str_replace('#code#',$code,SMS_VERIFY_CODE_TEMPLATE);
-//        $res = SMSService::create()->mock()->sms($content)->send($mobile);
-
-        // send voice verify code
-        $res = SMSService::create()->mock()->voice($code)->send($mobile);
+        if (php_sapi_name() == 'cli') {
+            $res = Task::transfer(new SendVerifyCodeTask(compact('mobile', 'code')));
+        } else {
+            // send voice verify code
+            $res = SMSService::create()->mock()->voice($code)->send($mobile);
+        }
         if ($res) {
             Cache::put(verifyCodeKey($mobile), $code, 5 * 60);
         }

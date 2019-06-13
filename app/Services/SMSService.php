@@ -5,6 +5,14 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
 
+// send sms verify code
+//        $content = str_replace('#code#',$code,SMS_VERIFY_CODE_TEMPLATE);
+//        $res = SMSService::create()->mock()->sms($content)->send($mobile);
+
+/**
+ * Class SMSService
+ * @package App\Services
+ */
 class SMSService
 {
     private $node_url;
@@ -91,19 +99,11 @@ class SMSService
         $log = "短信：{$mobile}  " . json_encode($this->params) . '  ' . json_encode($res);
 
         // 记录发送日志
-        if (php_sapi_name() == 'cli') { // swoole 模式走协程
-            go(function () use ($log) {
-                Log::info('协程：' . $log);
-            });
-        } else {
-            Log::info($log);
-        }
+        Log::info($log);
 
         if (isset($res['result']) && $res['result'] == 0) {
-
             return true;
         }
-
         return false;
     }
 
