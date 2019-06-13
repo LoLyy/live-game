@@ -45,10 +45,22 @@ $http->on('request', function (swoole_http_request $request, swoole_http_respons
     $_SERVER = array_merge($server, $header, $cookie, ['argv' => []]);
 
 
+    \Illuminate\Http\Request::enableHttpMethodParameterOverride();
+    $laravel_request = \Illuminate\Http\Request::createFromBase(new \Symfony\Component\HttpFoundation\Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER, $request->rawContent()));
+
+    if (0 === strpos($laravel_request->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+        && in_array(strtoupper($laravel_request->server->get('REQUEST_METHOD', 'GET')), ['PUT', 'DELETE', 'PATCH'])
+    ) {
+        parse_str($laravel_request->getContent(), $data);
+        $laravel_request->request = new \Symfony\Component\HttpFoundation\ParameterBag($data);
+    }
+
+
     // laravel 内核处理请求
     $kernel = app()->make(Illuminate\Contracts\Http\Kernel::class);
+
     $laravel_response = $kernel->handle(
-        $laravel_request = Illuminate\Http\Request::capture()
+        $laravel_request
     );
 
     // 将 laravel 的响应交给 swoole 的响应处理 header & cookies

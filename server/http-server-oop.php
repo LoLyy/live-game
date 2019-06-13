@@ -142,7 +142,21 @@ class WebServer
         ];
         $_SERVER = array_merge($server, $header, $cookie, ['argv' => []]);
 
-        return \Illuminate\Http\Request::capture();
+
+        // Initialize laravel request
+        \Illuminate\Http\Request::enableHttpMethodParameterOverride();
+
+        $laravel_request = \Illuminate\Http\Request::createFromBase(new \Symfony\Component\HttpFoundation\Request($_GET, $_POST, [], $_COOKIE, $_FILES, $_SERVER, $request->rawContent()));
+
+        if (0 === strpos($laravel_request->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+            && in_array(strtoupper($laravel_request->server->get('REQUEST_METHOD', 'GET')), ['PUT', 'DELETE', 'PATCH'])
+        ) {
+            parse_str($laravel_request->getContent(), $data);
+            $laravel_request->request = new \Symfony\Component\HttpFoundation\ParameterBag($data);
+        }
+
+
+        return $laravel_request;
     }
 
 }
