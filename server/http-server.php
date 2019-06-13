@@ -63,6 +63,10 @@ $http->on('request', function (swoole_http_request $request, swoole_http_respons
         $laravel_request
     );
 
+    // status
+    $response->status($laravel_response->getStatusCode());
+
+
     // 将 laravel 的响应交给 swoole 的响应处理 header & cookies
     collect($laravel_response->headers->allPreserveCaseWithoutCookies())->each(function ($values, $key) use ($response) {
         collect($values)->each(function ($value) use ($response, $key) {

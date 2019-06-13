@@ -103,6 +103,10 @@ class WebServer
      */
     private function laravelResponseTransferToSwoole(swoole_http_response $swoole_response, \Symfony\Component\HttpFoundation\Response $laravel_response)
     {
+
+        // status
+        $swoole_response->status($laravel_response->getStatusCode());
+
         // 将 laravel 的响应交给 swoole 的响应处理 header & cookies
         collect($laravel_response->headers->allPreserveCaseWithoutCookies())->each(function ($values, $key) use ($swoole_response) {
             collect($values)->each(function ($value) use ($swoole_response, $key) {
