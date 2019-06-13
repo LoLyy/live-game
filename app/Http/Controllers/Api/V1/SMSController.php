@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Requests\SMSSendRequest;
 use App\Services\SMSService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 class SMSController extends Controller
 {
-    public function sms(Request $request)
+    public function sms(SMSSendRequest $request)
     {
         if (!$mobile = $request->get('mobile')) {
             return $this->fail(RESPONSE_CODE_INVALID_PARAM, RESPONSE_MESSAGES[RESPONSE_CODE_INVALID_PARAM]);

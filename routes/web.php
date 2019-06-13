@@ -13,10 +13,6 @@
 
 Route::any('/', function () {
 
-   echo $msg = str_replace('#code#',123456,SMS_VERIFY_CODE_TEMPLATE);
-
-\App\Services\SMSService::create()->sms($msg)->send(18862612650);
-
     return view('welcome');
 });
 
