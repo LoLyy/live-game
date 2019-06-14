@@ -2,18 +2,11 @@
 
 namespace LSwoole\Swoole;
 
-use Illuminate\Support\Facades\Log;
 use LSwoole\Illuminate\Laravel;
 use LSwoole\Swoole\ServerMonitor\CommonMonitor;
 use LSwoole\Swoole\ServerMonitor\HttpServerMonitor;
-use LSwoole\Swoole\Task\Task;
+use LSwoole\Swoole\ServerMonitor\WebSocketServerMonitor;
 use Swoole\WebSocket\Server as SwooleServer;
-use Swoole\Http\Request as SwooleRequest;
-use Swoole\Http\Response as SwooleResponse;
-use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
-use  \Illuminate\Http\Request as IlluminateRequest;
 
 class WebSocketServer
 {
@@ -62,28 +55,12 @@ class WebSocketServer
 
         CommonMonitor::monitor($this->server);
 
+        WebSocketServerMonitor::monitor($this->server);
+
         HttpServerMonitor::monitor($this->server, $this->laravel);
-
-        // 监听 WebSocket 连接
-        $this->server->on('open', [$this, 'onOpen']);
-
-        //  监听 WebSocket 消息
-        $this->server->on('message', [$this, 'onMessage']);
 
         // 启动
         $this->server->start();
-    }
-
-
-    public function onOpen(SwooleServer $server, $fd)
-    {
-//        dump($fd);
-    }
-
-
-    public function onMessage(SwooleServer $server, $fd, $data)
-    {
-        dump($data);
     }
 
 

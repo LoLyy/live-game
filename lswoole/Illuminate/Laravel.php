@@ -5,7 +5,8 @@ namespace LSwoole\Illuminate;
 use Illuminate\Contracts\Console\Kernel as ConsoleKernel;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Application;
-use Swoole\WebSocket\Server;
+use Swoole\WebSocket\Server as WebSocketServer;
+use Swoole\Http\Server as HttpServer;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 
@@ -27,7 +28,7 @@ class Laravel
      */
     private function __construct($conf, $swoole)
     {
-        if (!$conf || !is_array($conf) || !$swoole || !($swoole instanceof Server)) {
+        if (!$conf || !is_array($conf) || !$swoole || !(($swoole instanceof HttpServer) || ($swoole instanceof WebSocketServer))) {
             throw new InvalidParameterException("参数错误");
         }
         $this->swoole = $swoole;

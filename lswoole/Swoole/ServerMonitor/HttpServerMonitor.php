@@ -15,8 +15,6 @@ use LSwoole\Response;
 use Swoole\Http\Request as SwooleRequest;
 use Swoole\Http\Response as SwooleResponse;
 use Swoole\Server;
-use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
-use  \Illuminate\Http\Request as IlluminateRequest;
 
 class HttpServerMonitor extends ServerMonitor
 {
