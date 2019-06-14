@@ -3,7 +3,13 @@
 include_once __DIR__ . '/../vendor/autoload.php';
 
 // 创建http-server 实例
-use LSwoole\Swoole\HttpServer;
+//use LSwoole\Swoole\HttpServer;
+//
+//$server = new HttpServer();
+//$server->run();
 
-$server = new HttpServer();
+// 创建http-server 实例
+use LSwoole\Swoole\WebSocketServer;
+
+$server = new WebSocketServer();
 $server->run();
