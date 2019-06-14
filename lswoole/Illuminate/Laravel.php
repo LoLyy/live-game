@@ -6,11 +6,15 @@ use Illuminate\Contracts\Console\Kernel as ConsoleKernel;
 use Illuminate\Contracts\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Application;
 use Swoole\WebSocket\Server;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 class Laravel
 {
 
+    /**
+     * @var Kernel $http_kernel
+     */
     public $http_kernel;
     public $app;
     private $swoole;

@@ -25,7 +25,7 @@ class MobileRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $reg = "/1\d{10}/";
+        $reg = "/1\d{10}$/";
 
         return preg_match($reg, $value, $match);
     }
