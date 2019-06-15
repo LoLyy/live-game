@@ -17,7 +17,13 @@ class Laravel
      * @var Kernel $http_kernel
      */
     public $http_kernel;
+    /**
+     * @var Container
+     */
     public $app;
+    /**
+     * @var HttpServer|WebSocketServer
+     */
     private $swoole;
     protected $conf;
 
