@@ -16,4 +16,5 @@ use Illuminate\Http\Request;
 \Illuminate\Support\Facades\Route::prefix('v1')->middleware([])->group(function () {
     Route::get('sms', "SMSController@sms");
     Route::post('login', "UserController@login");
+    Route::post('publish', "MatchController@publish");
 });

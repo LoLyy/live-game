@@ -10,6 +10,7 @@ namespace LSwoole\Swoole\ServerMonitor;
 
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use LSwoole\Illuminate\Laravel;
 use LSwoole\Swoole\Task\Task;
 use Swoole\Server;
@@ -108,8 +109,7 @@ class CommonMonitor extends ServerMonitor
     public function onClose($server, int $fd)
     {
         if ($server instanceof WebSocketServer) {
-            // todo clear fd from connection pool
-            echo "清除连接池里的fd $fd" . PHP_EOL;
+            Redis::connection()->srem('online_users',[$fd]);
         }
 
     }

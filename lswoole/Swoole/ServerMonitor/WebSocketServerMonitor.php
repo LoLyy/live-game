@@ -3,6 +3,7 @@
 namespace LSwoole\Swoole\ServerMonitor;
 
 
+use Illuminate\Support\Facades\Redis;
 use LSwoole\Illuminate\Laravel;
 use Swoole\Server;
 
@@ -31,7 +32,7 @@ class WebSocketServerMonitor extends ServerMonitor
      */
     public function onOpen(\Swoole\WebSocket\Server $server, $frame)
     {
-        dump($frame->fd);
+        Redis::connection()->sadd('online_users',[$frame->fd]);
     }
 
 
@@ -45,8 +46,13 @@ class WebSocketServerMonitor extends ServerMonitor
             case 'ping':
                 break;
             default:
-                $server->push($frame->fd, 'pong');
+                $server->push($frame->fd, json_encode([
+                    'type'=>'heart',
+                    'message'=>'pong'
+                ]));
                 break;
         }
     }
+
+
 }
