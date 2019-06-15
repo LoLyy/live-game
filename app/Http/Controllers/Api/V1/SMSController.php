@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\SMSSendRequest;
 use App\Services\SMSService;
 use App\Tasks\SendVerifyCodeTask;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
-use LSwoole\Swoole\Task\Task;
 
 class SMSController extends Controller
 {
@@ -25,10 +23,10 @@ class SMSController extends Controller
             // send voice verify code
             $res = SMSService::create()->mock()->voice($code)->send($mobile);
         }
-        if ($res) {
+        if ($res !== false) {
             Cache::put(verifyCodeKey($mobile), $code, 5 * 60);
         }
 
-        return $this->success();
+        return $this->success(compact('code'));
     }
 }
