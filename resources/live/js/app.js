@@ -1,6 +1,6 @@
 let http = axios
 // default
-http.defaults.baseURL = 'http://192.168.0.115:9090/'
+http.defaults.baseURL = 'http://66.42.96.32:9090/'
 http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 http.defaults.timeout = 5000
 
