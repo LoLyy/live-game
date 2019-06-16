@@ -21,6 +21,10 @@
             [v-cloak] {
                 display: none;
             }
+						.chat-box{
+							height: 300px;
+    					overflow-y: auto;
+						}
             .poster {
                 position: relative;
             }
@@ -304,7 +308,8 @@
                         </div>
                     </div>
                     <div v-show="showTab == 2">
-                        <div
+                        <div class="chat-box">
+														<div
                             class="comment"
                             v-for="chat in chats"
                             :key="chat.id"
@@ -334,13 +339,14 @@
                                 }}</span>
                             </div>
                             <div
-                                :style="'border-radius:10px;padding:10px;width: 90%;margin: 15px auto;background:' + chat.userinfo.background"
+                                :style="'border-radius:10px;padding:10px;width: 90%;margin: 15px auto;background:' + chat.userinfo.background + ';color:' + chat.userinfo.color"
                             >
                                 {{ chat.content }}
                             </div>
                         </div>
+												</div>
                         <div class="comment-form">
-                            <input
+                            <input @keyup.enter="sendChat"
                                 type="text"
                                 placeholder="别憋着，说点啥~~ 回车既发射"
                                 v-model="chat"
@@ -393,7 +399,8 @@
                                     username: '扶不上墙的烂泥',
                                     avatar:
                                         'https://tvax4.sinaimg.cn/crop.0.0.512.512.180/006bc9QWly8ftdsoadvq5j30e80e8aao.jpg',
-                                    background: '#eeccff'
+																		background: '#eeccff',
+																		color:'#000000'
                                 },
                                 content:
                                     '去看了《黑衣人》，全员西装真的太太太太带感了吧，感觉雷神真的好适合全套定制的西装啊，和男朋友一起去看的，结果全程我都在讲“雷神真的好帅啊”！'
@@ -405,7 +412,8 @@
                                     username: 'Lingan',
                                     avatar:
                                         'https://tvax3.sinaimg.cn/crop.0.0.1008.1008.180/6aedb651ly8fybc6380wpj20s00s0q40.jpg',
-                                    background: '#ffeecc'
+																		background: '#ffeecc',
+																		color:'#000000'
                                 },
                                 content: '我觉得《盗梦空间》才好看！'
                             }
@@ -458,17 +466,32 @@
                         clearInterval(this.heart)
                     },
                     sendChat() {
+											if(!this.chat){
+												return
+											}
                         let message = {
-                            userinfo: this.userinfo
-                        }
-                    },
+														id:Math.random() * 10000,
+														userinfo: this.userinfo,
+														content:this.chat
+												}
+												this.chat = '';
+												this.chats.push(message)
+												this.$nextTick(()=>{
+													this.chatBoxScrollBottom()
+												})
+										},
+										chatBoxScrollBottom(){
+											let box = this.$el.querySelector('.chat-box');
+											box.scrollTop = box.scrollHeight
+										},
                     publish() {
                         setInterval(() => {
                             this.$http.post('api/v1/publish').then(response => {
                                 // to do
                             })
                         }, Math.ceil(Math.random() * 70000))
-                    }
+										},
+									
                 }
             })
         </script>
