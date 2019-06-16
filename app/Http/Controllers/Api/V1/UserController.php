@@ -26,10 +26,13 @@ class UserController extends Controller
         }
 
         // register user or get user info
+        $factory = Factory::create('zh_CN');
         if (!$user = Redis::connection()->hgetall($mobile)) {
-            $username = Factory::create('zh_CN')->name();
+            $username = $factory->name();
             $token = md5($mobile);
-            $user = compact('username', 'token');
+            $id = rand(1000, 9999);
+            $background = $factory->safeHexColor;
+            $user = compact('id', 'username', 'token', 'background');
             Redis::connection()->hmset($mobile, $user);
         }
 
