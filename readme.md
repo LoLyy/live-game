@@ -10,6 +10,52 @@
 | :-----------------------------------------------: | :-----------------------------------------------: | :-----------------------------------------------: |
 | ![](https://s2.ax1x.com/2019/06/16/V7M51x.md.png) | ![](https://s2.ax1x.com/2019/06/16/V7MIc6.md.png) | ![](https://s2.ax1x.com/2019/06/16/V7MojK.md.png) |
 
+## 环境
+
+- PHP
+
+  ```bash
+  $ php -v
+
+  PHP 7.3.3 (cli) (built: Mar  8 2019 16:40:07) ( NTS )
+  Copyright (c) 1997-2018 The PHP Group
+  Zend Engine v3.3.3, Copyright (c) 1998-2018 Zend Technologies with Zend OPcache v7.3.3, Copyright (c) 1999-2018, by Zend Technologies
+  ```
+
+- Swoole
+
+  ```bash
+  $ php --ri swoole
+
+  swoole
+
+  Swoole => enabled
+  Author => Swoole Team <team@swoole.com>
+  Version => 4.3.4
+  Built => Jun 10 2019 15:59:43
+  coroutine => enabled
+  kqueue => enabled
+  rwlock => enabled
+  http2 => enabled
+  pcre => enabled
+  zlib => enabled
+  brotli => enabled
+  async_redis => enabled
+
+  Directive => Local Value => Master Value
+  swoole.enable_coroutine => On => On
+  swoole.display_errors => On => On
+  swoole.use_shortname => On => On
+  swoole.unixsock_buffer_size => 262144 => 262144
+  ```
+
+- Composer
+
+  ```bash
+  $ composer -V
+  Composer version 1.8.4 2019-02-11 10:52:10
+  ```
+
 ## 安装项目依赖
 
 ```bash
@@ -61,8 +107,8 @@ asyncTask(new \App\Tasks\TestTask("test for async task"));
 
 ## TODO
 
--   代码优化
--   Swoole 其他特性的使用
+- 代码优化
+- Swoole 其他特性的使用
 
 ## 备注
 
