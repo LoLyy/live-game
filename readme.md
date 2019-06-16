@@ -6,13 +6,9 @@
 
 ## 预览
 
-<figure class="third">
-  <img src="https://s2.ax1x.com/2019/06/16/V7M51x.md.png" width="300">
-
-<img src="https://s2.ax1x.com/2019/06/16/V7MojK.md.png" width="300">
-
-<img src="https://s2.ax1x.com/2019/06/16/V7MIc6.md.png" width="300">
-</figure>
+|                       Login                       |                       Match Info                       |                       Chat                       |
+| :-----------------------------------------------: | :-----------------------------------------------: | :-----------------------------------------------: |
+| ![](https://s2.ax1x.com/2019/06/16/V7M51x.md.png) | ![](https://s2.ax1x.com/2019/06/16/V7MIc6.md.png) | ![](https://s2.ax1x.com/2019/06/16/V7MojK.md.png) |
 
 ## 安装项目依赖
 
