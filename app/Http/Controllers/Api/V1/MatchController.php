@@ -18,9 +18,9 @@ class MatchController extends Controller
         $message = [
             'id'      => uniqid(),
             'author'  => $facker->name,
-            'avatar'  => $facker->imageUrl(),
+            'avatar'  => 'https://picsum.photos/40?time=' . time(),
             'content' => $facker->paragraph,
-            'image'   => [$facker->image(), ''][rand(0, 1)],
+            'image'   => ['https://picsum.photos/120/80?time=' . time(), ''][rand(0, 1)],
         ];
 
         $online_users = Redis::connection()->smembers('online_users');

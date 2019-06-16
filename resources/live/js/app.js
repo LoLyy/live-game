@@ -33,10 +33,10 @@ axios.interceptors.response.use(
                     alert(errors[0])
                     break
                 case 500:
-                    alert('服务器内部错误')
+                    console.log('服务器内部错误')
                     break
                 default:
-                    alert('服务器开了小差')
+                    console.log('服务器开了小差')
                     break
             }
         }
