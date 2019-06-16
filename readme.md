@@ -6,11 +6,11 @@
 
 ## 预览
 
-<img src="https://s2.ax1x.com/2019/06/16/V7MojK.md.png" width="300">
+<img src="https://s2.ax1x.com/2019/06/16/V7M51x.md.png" style="width:300px;float:left">
 
-<img src="https://s2.ax1x.com/2019/06/16/V7M51x.md.png" width="300">
+<img src="https://s2.ax1x.com/2019/06/16/V7MIc6.md.png" style="width:300px;float:left">
 
-<img src="https://s2.ax1x.com/2019/06/16/V7MIc6.md.png" width="300">
+<img src="https://s2.ax1x.com/2019/06/16/V7MojK.md.png" style="width:300px">
 
 ## 安装项目依赖
 
