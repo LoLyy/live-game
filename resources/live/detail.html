@@ -18,10 +18,10 @@
         <link rel="shortcut icon" href="./favicon.ico" />
         <style>
             /*详情界面保持上部分静止，下面滚动; 同样利用flex布局 poster自然高度， tab-nav自然高度， tab-block填满剩余部分*/
-            [v-cloak]{
-							display: none;
-						}
-						.poster {
+            [v-cloak] {
+                display: none;
+            }
+            .poster {
                 position: relative;
             }
             .post-img {
@@ -282,7 +282,11 @@
                 <div class="tab-block">
                     <div v-show="showTab == 1">
                         <div class="frame">
-                            <div class="frame-item" v-for="match in matches" :key="match.id">
+                            <div
+                                class="frame-item"
+                                v-for="match in matches"
+                                :key="match.id"
+                            >
                                 <span class="frame-dot"></span>
                                 <div class="frame-item-author">
                                     <img
@@ -290,9 +294,9 @@
                                         width="20px"
                                         height="20px"
                                     />
-                                    {{match.author}}
+                                    {{ match.author }}
                                 </div>
-                                <p>{{match.content}}</p>
+                                <p>{{ match.content }}</p>
                                 <p v-if="match.image">
                                     <img :src="match.image" width="40%" />
                                 </p>
@@ -330,26 +334,42 @@
                 data() {
                     return {
                         ws: null,
-												showTab: 1,
-												matches:[{
-													id:1,
-													author:'Lingan',
-													avatar:'https://tvax3.sinaimg.cn/crop.0.0.1008.1008.180/6aedb651ly8fybc6380wpj20s00s0q40.jpg',
-													content:'近日，中国移动公布《2019年核心网支持5G NSA功能升级改造设备集中采购单一来源采购信息公告》，华为、中兴、爱立信和诺基亚成功中标，其中华为的中标数量最多，是此次5G采购大单的赢家。',
-													image:'https://n.sinaimg.cn/sports/2_ori/upload/1f94b9de/772/w511h261/20190614/80e2-hymscpq2013076.gif',
-												},{
-													id:2,
-													author:'Lingan',
-													avatar:'https://tvax3.sinaimg.cn/crop.0.0.1008.1008.180/6aedb651ly8fybc6380wpj20s00s0q40.jpg',
-													content:'台湾的样子，安静温和是我感受到的台湾，经常都感觉身在电影中。吃过李安爱吃的小卷，到过不能说的秘密的淡江，模仿千禧波曼的天桥舒淇的经典画面… ​​​​',
-													image:'https://k.sinaimg.cn/n/sports/2_img/upload/1f94b9de/330/w1747h983/20190614/f7c0-hymscpq2013031.jpg/w640slw.jpg',
-												}],
-												chates:[]
+                        showTab: 1,
+                        userinfo: {},
+                        matches: [
+                            {
+                                id: 1,
+                                author: 'Lingan',
+                                avatar:
+                                    'https://tvax3.sinaimg.cn/crop.0.0.1008.1008.180/6aedb651ly8fybc6380wpj20s00s0q40.jpg',
+                                content:
+                                    '近日，中国移动公布《2019年核心网支持5G NSA功能升级改造设备集中采购单一来源采购信息公告》，华为、中兴、爱立信和诺基亚成功中标，其中华为的中标数量最多，是此次5G采购大单的赢家。',
+                                image:
+                                    'https://n.sinaimg.cn/sports/2_ori/upload/1f94b9de/772/w511h261/20190614/80e2-hymscpq2013076.gif'
+                            },
+                            {
+                                id: 2,
+                                author: 'Lingan',
+                                avatar:
+                                    'https://tvax3.sinaimg.cn/crop.0.0.1008.1008.180/6aedb651ly8fybc6380wpj20s00s0q40.jpg',
+                                content:
+                                    '台湾的样子，安静温和是我感受到的台湾，经常都感觉身在电影中。吃过李安爱吃的小卷，到过不能说的秘密的淡江，模仿千禧波曼的天桥舒淇的经典画面… ​​​​',
+                                image:
+                                    'https://k.sinaimg.cn/n/sports/2_img/upload/1f94b9de/330/w1747h983/20190614/f7c0-hymscpq2013031.jpg/w640slw.jpg'
+                            }
+                        ],
+                        chates: []
                     }
                 },
-                mounted() {
-										this.initWebSocket()
-										this.publish()
+                created () {
+                    let userinfo = localStorage.getItem('userinfo')
+                    if (!userinfo) {
+                        location.href = '/login.html'
+                    }
+                    this.userinfo = JSON.parse(userinfo)
+
+                    this.initWebSocket()
+                    this.publish()
                 },
                 methods: {
                     initWebSocket() {
@@ -371,28 +391,28 @@
                         }, 5000)
                     },
                     onMessage(event) {
-											let data = JSON.parse(event.data)
+                        let data = JSON.parse(event.data)
                         switch (data.type) {
                             case 'chat':
                                 break
                             case 'match':
-																this.matches.unshift(data.message)
-																break
-														case 'heart':
+                                this.matches.unshift(data.message)
+                                break
+                            case 'heart':
                             default:
                                 break
                         }
                     },
                     onClose(event) {
                         clearInterval(this.heart)
-										},
-										publish(){
-											setInterval(()=>{
-												this.$http.post('api/v1/publish').then(response => {
-												// to do
-											})
-											},Math.ceil(Math.random() * 70000))
-										}
+                    },
+                    publish() {
+                        setInterval(() => {
+                            this.$http.post('api/v1/publish').then(response => {
+                                // to do
+                            })
+                        }, Math.ceil(Math.random() * 70000))
+                    }
                 }
             })
         </script>

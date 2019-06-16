@@ -119,7 +119,7 @@
                 data() {
                     return {
                         title: '体育赛事图文直播平台',
-                        mobile: '18862616250',
+                        mobile: '10000000077',
                         code: '',
                         codeText: '验证码',
                         isCodeDisable: false
@@ -143,6 +143,8 @@
                             .post('api/v1/login', { mobile, code })
                             .then(response => {
                                 if (response.code == 0) {
+                                    // set userinfo to localstorage
+                                    localStorage.setItem('userinfo',JSON.stringify(response.data.user))
                                     // location index
                                     location.href = '/detail.html'
                                 } else {
