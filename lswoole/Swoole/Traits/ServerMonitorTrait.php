@@ -1,42 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lingan
- * Date: 2019/6/14
- * Time: 10:50 PM
- */
 
-namespace LSwoole\Swoole\ServerMonitor;
-
+namespace LSwoole\Swoole\Traits;
 
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
-use LSwoole\Illuminate\Laravel;
 use LSwoole\Swoole\Task\Task;
 use Swoole\Server;
-use Swoole\WebSocket\Server as WebSocketServer;
 
-
-class CommonMonitor extends ServerMonitor
+trait ServerMonitorTrait
 {
-
     /**
      * @param Server $server
-     * @param Laravel|null $laravel
+     * @param $obj
      */
-    public static function monitor(Server $server, Laravel $laravel = null)
+    public static function registerCommonMonitor(Server $server, $obj)
     {
-        $self = new self();
-
-        $server->on('start', [$self, 'onStart']);
-        $server->on('close', [$self, 'onClose']);
+        $server->on('start', [$obj, 'onStart']);
+        $server->on('close', [$obj, 'onClose']);
 
         // 监听工作进程启动
-        $server->on('workerStart', [$self, 'onWorkerStart']);
+        $server->on('workerStart', [$obj, 'onWorkerStart']);
 
-        $server->on('task', [$self, 'onTask']);
-        $server->on('finish', [$self, 'onFinish']);
+        $server->on('task', [$obj, 'onTask']);
+        $server->on('finish', [$obj, 'onFinish']);
     }
+
 
     /**
      * @param Server $server
@@ -108,10 +95,6 @@ class CommonMonitor extends ServerMonitor
      */
     public function onClose($server, int $fd)
     {
-        if ($server instanceof WebSocketServer) {
-            Redis::connection()->srem('online_users',[$fd]);
-        }
-
+        // todo connected close
     }
-
 }

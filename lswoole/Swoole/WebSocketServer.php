@@ -3,8 +3,6 @@
 namespace LSwoole\Swoole;
 
 use LSwoole\Illuminate\Laravel;
-use LSwoole\Swoole\ServerMonitor\CommonMonitor;
-use LSwoole\Swoole\ServerMonitor\HttpServerMonitor;
 use LSwoole\Swoole\ServerMonitor\WebSocketServerMonitor;
 use Swoole\WebSocket\Server as SwooleServer;
 
@@ -53,11 +51,7 @@ class WebSocketServer
     public function run()
     {
 
-        CommonMonitor::monitor($this->server);
-
-        WebSocketServerMonitor::monitor($this->server);
-
-        HttpServerMonitor::monitor($this->server, $this->laravel);
+        WebSocketServerMonitor::monitor($this->server, $this->laravel);
 
         // 启动
         $this->server->start();

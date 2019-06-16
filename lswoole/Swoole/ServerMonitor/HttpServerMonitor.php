@@ -8,16 +8,17 @@
 
 namespace LSwoole\Swoole\ServerMonitor;
 
-
 use LSwoole\Illuminate\Laravel;
 use LSwoole\Request;
 use LSwoole\Response;
+use LSwoole\Swoole\Traits\ServerMonitorTrait;
 use Swoole\Http\Request as SwooleRequest;
 use Swoole\Http\Response as SwooleResponse;
 use Swoole\Server;
 
 class HttpServerMonitor extends ServerMonitor
 {
+    use ServerMonitorTrait;
 
     /**
      * @var Laravel
@@ -43,6 +44,7 @@ class HttpServerMonitor extends ServerMonitor
 
         $server->on('request', [$self, 'onRequest']);
 
+        self::registerCommonMonitor($server, $self);
     }
 
 

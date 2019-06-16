@@ -3,7 +3,6 @@
 namespace LSwoole\Swoole;
 
 use LSwoole\Illuminate\Laravel;
-use LSwoole\Swoole\ServerMonitor\CommonMonitor;
 use LSwoole\Swoole\ServerMonitor\HttpServerMonitor;
 use Swoole\Http\Server;
 
@@ -51,8 +50,6 @@ class HttpServer
      */
     public function run()
     {
-
-        CommonMonitor::monitor($this->server);
 
         HttpServerMonitor::monitor($this->server, $this->laravel);
 
