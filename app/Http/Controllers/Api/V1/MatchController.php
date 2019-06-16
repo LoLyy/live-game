@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\User;
 use Faker\Factory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,12 +24,12 @@ class MatchController extends Controller
             'image'   => ['https://picsum.photos/120/80?time=' . time(), ''][rand(0, 1)],
         ];
 
-        $online_users = Redis::connection()->smembers('online_users');
+        $online_users = User::getOnlineUsers();
 
         foreach ($online_users as $user) {
             if (app('swoole')->exist($user)) {
                 app('swoole')->push($user, json_encode([
-                    'type'    => 'match',
+                    'event'    => 'match',
                     'message' => $message,
                 ]));
             } else {

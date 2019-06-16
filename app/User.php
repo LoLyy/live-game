@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Redis;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @param array $excepts
+     * @return array
+     */
+    public static function getOnlineUsers(array $excepts = [])
+    {
+       $online_users =  Redis::connection()->smembers('online_users');
+
+        return array_diff($online_users,$excepts);
+    }
 }

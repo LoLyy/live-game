@@ -2,8 +2,12 @@
 
 namespace LSwoole\Swoole\ServerMonitor;
 
+use App\Tasks\SendChatMessageTask;
+use App\Tasks\SendWebSocketMessageTask;
+use App\User;
 use Illuminate\Support\Facades\Redis;
 use LSwoole\Illuminate\Laravel;
+use LSwoole\Swoole\Task\Task;
 use Swoole\Server;
 use Swoole\WebSocket\Server as WebSocketServer;
 
@@ -46,12 +50,22 @@ class WebSocketServerMonitor extends HttpServerMonitor
      */
     public function onMessage(\Swoole\WebSocket\Server $server, $frame)
     {
-        switch ($frame->data['event'] ?? '') {
-            case 'ping':
+        $data = json_decode($frame->data,true);
+
+        switch ($data['event'] ?? '') {
+            case 'chat':
+                $message = $data['message'];
+                $online_users = User::getOnlineUsers([$frame->fd]);
+                $send_data = [
+                    'event'=>'chat',
+                    'message'=>$message
+                ];
+                Task::transfer(new SendChatMessageTask(compact('online_users', 'send_data')));
                 break;
+            case 'ping':
             default:
                 $server->push($frame->fd, json_encode([
-                    'type'    => 'heart',
+                    'event'    => 'heart',
                     'message' => 'pong',
                 ]));
                 break;
@@ -64,9 +78,10 @@ class WebSocketServerMonitor extends HttpServerMonitor
      */
     public function onClose($server, $fd)
     {
-        if ($server instanceof WebSocketServer) {
+//        if ($server instanceof WebSocketServer) {
             Redis::connection()->srem('online_users', [$fd]);
-        }
+//        }
+        dump($fd);
 
     }
 
