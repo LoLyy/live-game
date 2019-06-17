@@ -36,6 +36,9 @@ class WebSocketServer
             'document_root'         => self::STATIC_ROOT,
             'worker_num'            => self::WORKER_NUM,
             'task_worker_num'       => self::TASK_WORKER_NUM,
+            'daemonize'             => 1,
+            'log_file'              => __DIR__ . '/../../storage/logs/swoole.log',
+            'log_level'             => 1,
         ]);
 
         $config = [

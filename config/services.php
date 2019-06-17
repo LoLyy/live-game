@@ -44,9 +44,12 @@ return [
         ],
     ],
     'monyun' => [
-        'user_id'  => 'E1085J',
-        'password' => 'r2kF0Q',
-        'api_key'  => 'a77d7e48b8d2c6f26b14af54f87f4d0e',
+        'user_id'  => env('MONYUN_USER_ID',''),
+        // E 1085J
+        'password' => env('MONYUN_PASSWORD'.''),
+        // r 2kF0Q
+        'api_key'  => env('MONYUN_API_KEY',''),
+        // a77d7e4 8b8d2c6f2 6b14af54f 87f4d0e
         'nodes'    => [
             'south_sms_url'   => env('SOUTH_SMS_URL', 'http://api01.monyun.cn:7901/sms/v2/std/single_send'), // 南方短信
             'north_sms_url'   => env('NORTH_SMS_URL', 'http://api02.monyun.cn:7901/sms/v2/std/single_send'),// 北方短信
